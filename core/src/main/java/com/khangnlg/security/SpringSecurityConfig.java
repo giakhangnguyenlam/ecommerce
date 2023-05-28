@@ -1,4 +1,4 @@
-package com.khangnlg.config;
+package com.khangnlg.security;
 
 import com.khangnlg.filter.JWTFilter;
 import lombok.RequiredArgsConstructor;
