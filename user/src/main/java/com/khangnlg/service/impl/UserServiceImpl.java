@@ -1,0 +1,91 @@
+package com.khangnlg.service.impl;
+
+import com.khangnlg.entities.UserEntity;
+import com.khangnlg.exception.ObjectNotValidException;
+import com.khangnlg.exception.UserExistException;
+import com.khangnlg.model.UserLoginModel;
+import com.khangnlg.model.UserRegistrationModel;
+import com.khangnlg.models.Token;
+import com.khangnlg.models.UserModel;
+import com.khangnlg.objectmapper.Converter;
+import com.khangnlg.repositories.UserRepository;
+import com.khangnlg.security.JWTService;
+import com.khangnlg.service.UserService;
+import com.khangnlg.validator.ObjectValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    @Qualifier("userConverter")
+    private Converter<UserModel, UserEntity> userConverter;
+
+    @Autowired
+    @Qualifier("userRegistrationConverter")
+    private Converter<UserRegistrationModel, UserEntity> userRegistrationConverter;
+
+    @Autowired
+    private JWTService jwtService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private ObjectValidator<UserLoginModel> userLoginModelObjectValidator;
+
+    @Autowired
+    private ObjectValidator<UserRegistrationModel> userRegistrationModelObjectValidator;
+
+    @Override
+    public Token createUser(UserRegistrationModel userRegistrationModel) throws Exception {
+
+        userRegistrationModelObjectValidator.valid(userRegistrationModel);
+
+        if(isUserExist(userRegistrationModel.getUsername())){
+            throw new UserExistException("username "+ userRegistrationModel.getUsername()+"is existed");
+        }
+
+        UserEntity userEntity = userRegistrationConverter.convertModelToEntity(userRegistrationModel);
+        userEntity = userRepository.save(userEntity);
+        Token token = jwtService.generateToken(userEntity.getUsername());
+
+        return token;
+
+    }
+
+    private boolean isUserExist(String username) {
+        Optional<UserEntity> optionalUserEntity = userRepository.findByUserName(username);
+        return optionalUserEntity.isPresent();
+    }
+
+    @Override
+    public Token validateUser(UserLoginModel userLoginModel) throws ObjectNotValidException {
+
+        userLoginModelObjectValidator.valid(userLoginModel);
+
+        try{
+            Authentication authentication = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(userLoginModel.getUsername(), userLoginModel.getPassword(), null));
+        }catch (AuthenticationException e){
+            throw new AuthenticationCredentialsNotFoundException("Username or password is incorrect");
+        }
+
+        Token token = jwtService.generateToken(userLoginModel.getUsername());
+        return token;
+
+    }
+
+}
