@@ -29,6 +29,8 @@
 		<common.lang.version>3.12.0</common.lang.version>
 		<logback.core.version>1.4.5</logback.core.version>
 		<slf4j.api.version>2.0.6</slf4j.api.version>
+		<spring.data.redis>2.7.12</spring.data.redis>
+		<jedis.verion>4.4.1</jedis.verion>
 	</properties>
 
 	<dependencyManagement>
@@ -113,6 +115,11 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-aop</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-redis</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 		</dependencies>
