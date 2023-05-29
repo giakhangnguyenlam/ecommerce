@@ -1,5 +1,6 @@
 package com.khangnlg.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,9 +31,11 @@ public class UserEntity implements Serializable {
     private String phone;
 
     @OneToMany(mappedBy = "userId", orphanRemoval = true, cascade = CascadeType.ALL, targetEntity = OrderEntity.class)
+    @JsonIgnore
     private List<OrderEntity> orders;
 
     @OneToMany(mappedBy = "userId", orphanRemoval = true, cascade = CascadeType.ALL, targetEntity = StoreEntity.class)
+    @JsonIgnore
     private List<StoreEntity> stores;
 
 

@@ -5,13 +5,14 @@ import com.khangnlg.message.ResponseMessage;
 import com.khangnlg.model.UserLoginModel;
 import com.khangnlg.model.UserRegistrationModel;
 import com.khangnlg.models.Token;
+import com.khangnlg.models.UserModel;
 import com.khangnlg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -58,4 +59,26 @@ public class UserController {
                     .build();
         }
     }
+
+    @GetMapping("/me")
+    public ResponseMessage getMyInformation(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserModel userModel = userService.getUserByUsername(userDetails.getUsername());
+        if(userModel!=null){
+            return ResponseMessage
+                    .builder()
+                    .status(HttpStatus.OK.value())
+                    .data(userModel)
+                    .build();
+        }else {
+            return ResponseMessage
+                    .builder()
+                    .status(HttpStatus.BAD_REQUEST.value())
+                    .message("Can't find user")
+                    .build();
+        }
+    }
+
+
+
 }

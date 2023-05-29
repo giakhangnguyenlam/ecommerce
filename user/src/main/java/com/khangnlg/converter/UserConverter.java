@@ -34,7 +34,16 @@ public class UserConverter implements Converter<UserModel, UserEntity> {
 
     @Override
     public UserModel convertEntityToModel(UserEntity userEntity) {
-        return null;
+        return UserModel
+                .builder()
+                .id(userEntity.getId())
+                .name(userEntity.getName())
+                .address(userEntity.getAddress())
+                .phone(userEntity.getPhone())
+                .email(userEntity.getEmail())
+                .dateOfBirth(userEntity.getDateOfBirth())
+                .phone(userEntity.getPhone())
+                .build();
     }
 
 }
