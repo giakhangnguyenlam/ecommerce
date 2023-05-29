@@ -41,8 +41,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                     .disable()
                 .authorizeRequests()
+                    // User location
                     .antMatchers(HttpMethod.POST,"/api/v1/users/authentication").permitAll()
                     .antMatchers(HttpMethod.POST,"/api/v1/users").permitAll()
+                    .antMatchers("/api/v1/users/me").hasAnyRole("USER", "ADMIN")
                     .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

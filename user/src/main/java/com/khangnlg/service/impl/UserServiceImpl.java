@@ -1,5 +1,6 @@
 package com.khangnlg.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.khangnlg.entities.UserEntity;
 import com.khangnlg.exception.ObjectNotValidException;
 import com.khangnlg.exception.UserExistException;
@@ -40,6 +41,9 @@ public class UserServiceImpl implements UserService {
     private Converter<UserRegistrationModel, UserEntity> userRegistrationConverter;
 
     @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
     private JWTService jwtService;
 
     @Autowired
@@ -66,7 +70,7 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = userRegistrationConverter.convertModelToEntity(userRegistrationModel);
         userEntity = userRepository.save(userEntity);
-        redisTemplate.opsForValue().set(userEntity.getUsername(), userEntity);
+        redisTemplate.opsForValue().set(userEntity.getUsername(), objectMapper.writeValueAsString(userEntity));
         Token token = jwtService.generateToken(userEntity.getUsername());
 
         return token;
@@ -93,6 +97,16 @@ public class UserServiceImpl implements UserService {
         Token token = jwtService.generateToken(userLoginModel.getUsername());
         return token;
 
+    }
+
+    @Override
+    public UserModel getUserByUsername(String username) {
+        Optional<UserEntity> optionalUserEntity = userRepository.findByUserName(username);
+        if(optionalUserEntity.isPresent()){
+            return userConverter.convertEntityToModel(optionalUserEntity.get());
+        }else {
+            return null;
+        }
     }
 
 }

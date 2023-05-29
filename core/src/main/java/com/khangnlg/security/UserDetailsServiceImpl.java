@@ -1,7 +1,10 @@
 package com.khangnlg.security;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.khangnlg.entities.UserEntity;
 import com.khangnlg.repositories.UserRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,20 +25,29 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserEntity userEntity = (UserEntity) redisTemplate.opsForValue().get(username);
-        if(userEntity == null){
+        String userRedis = (String) redisTemplate.opsForValue().get(username);
+        if(StringUtils.isEmpty(userRedis)){
             Optional<UserEntity> optionalUserEntity = userRepository.findByUserName(username);
             if(optionalUserEntity.isPresent()){
-                userEntity = optionalUserEntity.get();
+                UserEntity userEntity = optionalUserEntity.get();
                 redisTemplate.opsForValue().set(username, userEntity);
                 return new UserDetailsModel(userEntity);
             }else {
                 throw new UsernameNotFoundException(username + "not found");
             }
         }else {
+            UserEntity userEntity = null;
+            try {
+                userEntity = objectMapper.readValue(userRedis, UserEntity.class);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
             return new UserDetailsModel(userEntity);
         }
 
