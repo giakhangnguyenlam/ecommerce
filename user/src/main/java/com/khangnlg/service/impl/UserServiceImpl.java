@@ -14,12 +14,14 @@ import com.khangnlg.service.UserService;
 import com.khangnlg.validator.ObjectValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -49,6 +51,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ObjectValidator<UserRegistrationModel> userRegistrationModelObjectValidator;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Transactional
     @Override
     public Token createUser(UserRegistrationModel userRegistrationModel) throws Exception {
 
@@ -60,6 +66,7 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = userRegistrationConverter.convertModelToEntity(userRegistrationModel);
         userEntity = userRepository.save(userEntity);
+        redisTemplate.opsForValue().set(userEntity.getUsername(), userEntity);
         Token token = jwtService.generateToken(userEntity.getUsername());
 
         return token;
