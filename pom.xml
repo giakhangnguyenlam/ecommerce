@@ -31,6 +31,10 @@
 		<slf4j.api.version>2.0.6</slf4j.api.version>
 		<spring.data.redis>2.7.12</spring.data.redis>
 		<jedis.verion>4.4.1</jedis.verion>
+		<logback.core.version>1.4.5</logback.core.version>
+		<slf4j.api.version>2.0.3</slf4j.api.version>
+		<logback.classic.version>1.4.5</logback.classic.version>
+		<slf4j.simple.version>1.7.25</slf4j.simple.version>
 	</properties>
 
 	<dependencyManagement>
@@ -122,10 +126,13 @@
 				<artifactId>spring-boot-starter-data-redis</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-log4j2</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
-
 
 	<build>
 		<resources>
