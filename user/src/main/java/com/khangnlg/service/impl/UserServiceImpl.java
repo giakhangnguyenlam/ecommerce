@@ -13,6 +13,8 @@ import com.khangnlg.repositories.UserRepository;
 import com.khangnlg.security.JWTService;
 import com.khangnlg.service.UserService;
 import com.khangnlg.validator.ObjectValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -28,6 +30,8 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -61,6 +65,8 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public Token createUser(UserRegistrationModel userRegistrationModel) throws Exception {
+
+        logger.info("Create user with username"+userRegistrationModel.getUsername());
 
         userRegistrationModelObjectValidator.valid(userRegistrationModel);
 
