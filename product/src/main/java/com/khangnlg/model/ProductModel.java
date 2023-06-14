@@ -1,22 +1,23 @@
-package com.khangnlg.entities;
+package com.khangnlg.model;
 
+import com.khangnlg.entities.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.List;
 
-@Entity(name = "product")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProductEntity {
+public class ProductModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     /**
      * 3 types of category:
@@ -32,20 +33,10 @@ public class ProductEntity {
     private String image;
     public boolean isDiscount;
     public double discount;
-
-    @ManyToOne(targetEntity = StoreEntity.class)
     private long storeId;
-
-    @OneToMany(mappedBy = "productId", orphanRemoval = true, cascade = CascadeType.ALL, targetEntity = CommentEntity.class)
     private List<CommentEntity> comments;
-
-    @OneToOne(targetEntity = CategoryShoesEntity.class)
     private CategoryShoesEntity categoryshoes;
-
-    @OneToOne(targetEntity = CategoryClothesEntity.class)
     private CategoryClothesEntity categoryclothes;
-
-    @OneToOne(targetEntity = CategoryAccessoriesEntity.class)
     private CategoryAccessoriesEntity categoryaccessories;
 
 }
