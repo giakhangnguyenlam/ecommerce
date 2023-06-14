@@ -1,6 +1,7 @@
 package com.khangnlg.exception;
 
 import com.khangnlg.message.ResponseMessage;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
@@ -16,7 +17,7 @@ public class GlobalHandlerException {
         return ResponseMessage
                 .builder()
                 .message(e.getMessage())
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .build();
     }
 
@@ -40,7 +41,18 @@ public class GlobalHandlerException {
 
     @ExceptionHandler(ObjectNotValidException.class)
     public ResponseMessage objectNotValidExceptionHandler(ObjectNotValidException e){
-        return ResponseMessage.builder().message(e.getMessage()).status(HttpStatus.BAD_REQUEST.value()).build();
+        return ResponseMessage.builder()
+                .message(e.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .build();
+    }
+
+    @ExceptionHandler(ObjectNotFoundException.class)
+    public ResponseMessage objectNotFoundExceptionHandler(ObjectNotFoundException e){
+        return ResponseMessage.builder()
+                .message(e.getMessage())
+                .status(HttpStatus.NOT_FOUND.value())
+                .build();
     }
 
 
