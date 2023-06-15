@@ -7,6 +7,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ecommerce</name>
 	<description>Practice microservice</description>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.12</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
 	<modules>
 		<module>core</module>
 		<module>product</module>
@@ -32,7 +38,7 @@
 		<jaxb.api.version>2.3.1</jaxb.api.version>
 		<maven.complier.plugin>3.11.0</maven.complier.plugin>
 		<liquibase.core.version>4.22.0</liquibase.core.version>
-		<liquibase.maven.plugin.version>4.2.2</liquibase.maven.plugin.version>
+		<liquibase.maven.plugin.version>4.22.0</liquibase.maven.plugin.version>
 	</properties>
 
 	<dependencyManagement>
@@ -164,7 +170,16 @@
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
-					<version>${spring.version}</version>
+					<configuration>
+						<mainClass>com.khangnlg.Main</mainClass>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -183,7 +198,7 @@
 					<version>${liquibase.maven.plugin.version}</version>
 					<configuration>
 						<propertyFileWillOverride>true</propertyFileWillOverride>
-						<propertyFile>src/main/resources/application.properties</propertyFile>
+						<propertyFile>file:core/src/main/resources/application.properties</propertyFile>
 					</configuration>
 				</plugin>
 			</plugins>

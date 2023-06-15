@@ -14,4 +14,16 @@
        </addColumn>
     </changeSet>
 
+    <changeSet id="7" author="khangnguyen">
+        <addColumn tableName="product">
+            <column name="lastModifiedBy" type="varchar(255)"></column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="8" author="khangnguyen">
+        <addColumn tableName="user">
+            <column name="createdBy" type="varchar(255)"></column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
