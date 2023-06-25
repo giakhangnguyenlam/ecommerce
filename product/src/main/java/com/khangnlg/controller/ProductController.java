@@ -9,6 +9,7 @@ import com.khangnlg.security.JWTService;
 import com.khangnlg.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +31,9 @@ public class ProductController {
     private final WebClient webClient;
 
     private final JWTService jwtService;
+
+    @Value("${user.host.url}")
+    private String userHost;
 
     @PostMapping
     public ResponseEntity createProduct(@RequestBody ProductRegistrationModel productModel){
@@ -57,7 +61,7 @@ public class ProductController {
     public ResponseMessage getUserById(@PathVariable("username") String username){
 
         URI uri = UriComponentsBuilder
-                .fromHttpUrl("http://localhost:8881")
+                .fromHttpUrl(userHost)
                 .path("/api/v1/users/username/"+username)
                 .build()
                 .toUri();

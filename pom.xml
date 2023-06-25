@@ -35,6 +35,8 @@
 		<liquibase.maven.plugin.version>4.22.0</liquibase.maven.plugin.version>
 		<micrometer.registry.prometheus>1.10.6</micrometer.registry.prometheus>
 		<logstash.logback.encoder.version>7.0.1</logstash.logback.encoder.version>
+		<netty.version>4.1.93.Final</netty.version>
+		<refactor.core.version>3.5.6</refactor.core.version>
 	</properties>
 
 	<dependencyManagement>
@@ -164,12 +166,12 @@
 			<dependency>
 				<groupId>io.netty</groupId>
 				<artifactId>netty-all</artifactId>
-				<version>4.1.87.Final</version>
+				<version>${netty.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>io.projectreactor</groupId>
 				<artifactId>reactor-core</artifactId>
-				<version>3.4.24</version>
+				<version>${refactor.core.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
