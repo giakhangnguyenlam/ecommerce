@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ObjectNotFoundException extends Exception {
+public class ObjectNotFoundException extends RuntimeException {
 
     String mess;
 

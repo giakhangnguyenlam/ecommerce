@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductModel getProductById(long id) throws ObjectNotFoundException {
+    public ProductModel getProductById(long id) {
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(id);
         if(optionalProductEntity.isPresent()){
             return productModelConverter.convertEntityToModel(optionalProductEntity.get());

@@ -8,7 +8,7 @@ public interface ProductService {
 
     ProductModel createProduct(ProductRegistrationModel product);
 
-    ProductModel getProductById(long id) throws ObjectNotFoundException;
+    ProductModel getProductById(long id);
 
     void updateProduct(ProductModel product) throws ObjectNotFoundException;
 

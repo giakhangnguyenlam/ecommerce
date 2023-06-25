@@ -77,8 +77,25 @@ public class UserController {
                     .message("Can't find user")
                     .build();
         }
+
     }
 
-
+    @GetMapping("/username/{username}")
+    public ResponseMessage getMyInformation(@PathVariable("username") String username) {
+        UserModel userModel = userService.getUserByUsername(username);
+        if (userModel != null) {
+            return ResponseMessage
+                    .builder()
+                    .status(HttpStatus.OK.value())
+                    .data(userModel)
+                    .build();
+        } else {
+            return ResponseMessage
+                    .builder()
+                    .status(HttpStatus.BAD_REQUEST.value())
+                    .message("Can't find user")
+                    .build();
+        }
+    }
 
 }

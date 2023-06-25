@@ -33,6 +33,8 @@
 		<maven.complier.plugin>3.11.0</maven.complier.plugin>
 		<liquibase.core.version>4.22.0</liquibase.core.version>
 		<liquibase.maven.plugin.version>4.22.0</liquibase.maven.plugin.version>
+		<micrometer.registry.prometheus>1.10.6</micrometer.registry.prometheus>
+		<logstash.logback.encoder.version>7.0.1</logstash.logback.encoder.version>
 	</properties>
 
 	<dependencyManagement>
@@ -55,11 +57,6 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-security</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-validation</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
@@ -148,6 +145,31 @@
 				<groupId>org.liquibase</groupId>
 				<artifactId>liquibase-core</artifactId>
 				<version>${liquibase.core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.micrometer</groupId>
+				<artifactId>micrometer-registry-prometheus</artifactId>
+				<version>${micrometer.registry.prometheus}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.logstash.logback</groupId>
+				<artifactId>logstash-logback-encoder</artifactId>
+				<version>${logstash.logback.encoder.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-webflux</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-all</artifactId>
+				<version>4.1.87.Final</version>
+			</dependency>
+			<dependency>
+				<groupId>io.projectreactor</groupId>
+				<artifactId>reactor-core</artifactId>
+				<version>3.4.24</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
