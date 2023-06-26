@@ -7,14 +7,14 @@ import com.khangnlg.model.UserRegistrationModel;
 import com.khangnlg.models.Token;
 import com.khangnlg.models.UserModel;
 import com.khangnlg.service.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -23,6 +23,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @ApiOperation("Authen User")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "User login successfully"),
+            @ApiResponse(code = 400, message = "Username or password incorrect")
+    })
     @PostMapping("/authentication")
     public ResponseMessage userAuthentication(@RequestBody UserLoginModel userLoginModel){
         try {

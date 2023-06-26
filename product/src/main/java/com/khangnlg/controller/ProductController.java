@@ -4,21 +4,17 @@ import com.khangnlg.message.ResponseMessage;
 import com.khangnlg.model.ProductModel;
 import com.khangnlg.model.ProductRegistrationModel;
 import com.khangnlg.models.Token;
-import com.khangnlg.models.UserModel;
 import com.khangnlg.security.JWTService;
 import com.khangnlg.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.validation.constraints.Pattern;
 import java.net.URI;
 
 @RestController

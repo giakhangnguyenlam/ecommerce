@@ -37,6 +37,7 @@
 		<logstash.logback.encoder.version>7.0.1</logstash.logback.encoder.version>
 		<netty.version>4.1.93.Final</netty.version>
 		<refactor.core.version>3.5.6</refactor.core.version>
+		<springfox.swagger2.version>2.9.2</springfox.swagger2.version>
 	</properties>
 
 	<dependencyManagement>
@@ -173,6 +174,17 @@
 				<artifactId>reactor-core</artifactId>
 				<version>${refactor.core.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${springfox.swagger2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+				<version>${springfox.swagger2.version}</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
