@@ -68,6 +68,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().mvcMatchers(HttpMethod.OPTIONS, "/**");
         web.ignoring().mvcMatchers("/swagger-ui/**","/swagger-ui.html/**", "/configuration/**", "/swagger-resources/**", "/v2/api-docs/**","/webjars/**","/favicon.ico/**");
+        web.ignoring().antMatchers("/data/**");
     }
 
     @Override

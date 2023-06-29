@@ -11,6 +11,7 @@
 		<module>core</module>
 		<module>product</module>
 		<module>user</module>
+		<module>notification</module>
 	</modules>
 	<packaging>pom</packaging>
 
@@ -183,6 +184,11 @@
 				<groupId>io.springfox</groupId>
 				<artifactId>springfox-swagger-ui</artifactId>
 				<version>${springfox.swagger2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-websocket</artifactId>
+				<version>${spring.version}</version>
 			</dependency>
 
 		</dependencies>
