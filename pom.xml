@@ -12,7 +12,8 @@
 		<module>product</module>
 		<module>user</module>
 		<module>notification</module>
-	</modules>
+        <module>migration</module>
+    </modules>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -190,7 +191,16 @@
 				<artifactId>spring-boot-starter-websocket</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
-
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-batch</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-log4j2</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

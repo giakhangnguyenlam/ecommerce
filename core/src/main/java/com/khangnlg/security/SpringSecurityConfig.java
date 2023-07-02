@@ -55,6 +55,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                     // product location
                     .antMatchers("/api/v1/products/**").hasAnyRole("USER","ADMIN")
                     .antMatchers("/actuator/**").permitAll()
+                    // Sprint batch
+                    .antMatchers(HttpMethod.POST, "/api/v1/jobs/importCustomers/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

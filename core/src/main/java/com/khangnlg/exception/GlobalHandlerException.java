@@ -55,5 +55,13 @@ public class GlobalHandlerException {
                 .build();
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseMessage exceptionHandler(Exception e){
+        return ResponseMessage.builder()
+                .message(e.getMessage())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .build();
+    }
+
 
 }

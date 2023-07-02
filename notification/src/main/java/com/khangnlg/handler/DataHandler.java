@@ -7,6 +7,8 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.util.Optional;
+
 @Slf4j
 @Component
 public class DataHandler extends TextWebSocketHandler {
