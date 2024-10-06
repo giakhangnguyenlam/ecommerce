@@ -1,9 +1,7 @@
 package com.khangnlg.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -22,7 +20,8 @@ public class CommentEntity {
     private int star;
     private long date;
 
-    @ManyToOne(targetEntity = ProductEntity.class)
-    private long productId;
+    @ManyToOne(targetEntity = ProductEntity.class, fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private ProductEntity productId;
 
 }

@@ -1,14 +1,17 @@
 package com.khangnlg.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.khangnlg.entities.CommentEntity;
 import com.khangnlg.entities.UserEntity;
 import com.khangnlg.exception.ObjectNotValidException;
 import com.khangnlg.exception.UserExistException;
 import com.khangnlg.model.UserLoginModel;
 import com.khangnlg.model.UserRegistrationModel;
 import com.khangnlg.models.Token;
+import com.khangnlg.models.UserCommentCus;
 import com.khangnlg.models.UserModel;
 import com.khangnlg.objectmapper.Converter;
+import com.khangnlg.repositories.CommentRepository;
 import com.khangnlg.repositories.UserRepository;
 import com.khangnlg.security.JWTService;
 import com.khangnlg.service.UserService;
@@ -26,6 +29,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -61,6 +65,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Transactional
     @Override
@@ -108,6 +115,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserModel getUserByUsername(String username) {
         Optional<UserEntity> optionalUserEntity = userRepository.findByUserName(username);
+        List<Object[]> comments = userRepository.getCommentByUserName(username);
+        List<UserCommentCus> userCommentCuses = userRepository.findUserCommentCus();
+        Optional<CommentEntity> optionalCommentEntity = commentRepository.findById(1L);
         if(optionalUserEntity.isPresent()){
             return userConverter.convertEntityToModel(optionalUserEntity.get());
         }else {
